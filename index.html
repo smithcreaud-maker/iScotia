@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0A0A0A">
+  <meta name="description" content="Recevez le guide gratuit sur les stratégies d’analyse assistées par IA. Ressource éducative indépendante.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Les 5 stratégies IA qui transforment le trading">
+  <meta property="og:description" content="Recevez gratuitement le guide par email.">
+  <title>Les 5 stratégies IA qui transforment le trading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0a0a;
+      --card: #111111;
+      --border: #303033;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --accent: #e01e26;
+      --success: #22c55e;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 32px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      background: radial-gradient(ellipse at 50% 0%, rgb(224 30 38 / 13%), transparent 45%), var(--bg);
+      font-family: Inter, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    :focus-visible { outline: 3px solid #ff777d; outline-offset: 4px; }
+    .app { width: 100%; max-width: 480px; }
+    .brand { margin-bottom: 26px; text-align: center; }
+    .brand-mark { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .brand-note { color: var(--muted); font-size: 12px; }
+
+    /* Progression en deux étapes */
+    .stepper { position: relative; display: flex; justify-content: space-between; margin: 0 20px 26px; padding: 0; list-style: none; }
+    .step-track, .step-progress { position: absolute; top: 14px; left: 29px; height: 2px; }
+    .step-track { right: 29px; background: var(--border); }
+    .step-progress { width: 0; background: var(--accent); transition: width 350ms ease; }
+    .step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 0 7px; background: var(--bg); }
+    .step-bubble { display: grid; width: 29px; height: 29px; place-items: center; border: 1px solid #49494f; border-radius: 50%; background: #18181b; color: var(--muted); font-size: 12px; font-weight: 600; transition: color 200ms ease, border-color 200ms ease, background 200ms ease; }
+    .step-label { color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+    .step[aria-current="step"] .step-bubble { border-color: var(--accent); color: #fff; box-shadow: 0 0 14px rgb(224 30 38 / 34%); }
+    .step[aria-current="step"] .step-label { color: #fff; }
+    .step.done .step-bubble { border-color: var(--success); background: var(--success); color: #07130b; }
+
+    /* Carte et états du formulaire */
+    .card { min-height: 370px; padding: 34px 26px; display: flex; flex-direction: column; justify-content: center; border: 1px solid rgb(255 255 255 / 10%); border-radius: 14px; background: rgb(17 17 17 / 88%); box-shadow: 0 24px 70px rgb(0 0 0 / 38%); backdrop-filter: blur(16px); }
+    .view[hidden] { display: none !important; }
+    .view:not([hidden]) { animation: appear 360ms ease both; }
+    .tag { display: inline-block; margin-bottom: 16px; padding: 5px 10px; border-radius: 999px; background: rgb(224 30 38 / 12%); color: #ff8589; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .tag.success { background: rgb(34 197 94 / 12%); color: #86efac; }
+    h1, h2 { margin: 0 0 12px; color: #fff; font-size: 25px; font-weight: 700; line-height: 1.28; }
+    .description { margin: 0 0 24px; color: #b7b7bf; font-size: 14px; line-height: 1.7; }
+    .form-group { display: grid; gap: 12px; }
+    .guide-summary { margin: 0 0 20px; padding: 15px; border: 1px solid var(--border); border-radius: 9px; background: rgb(255 255 255 / 3%); }
+    .guide-summary strong { color: #fff; font-size: 14px; }
+    .guide-summary p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .lead-input, .country-select { width: 100%; min-width: 0; min-height: 50px; padding: 13px 14px; border: 1px solid #3f3f46; border-radius: 9px; background: #19191b; color: #fff; font: inherit; font-size: 14px; transition: border-color 180ms ease, box-shadow 180ms ease; }
+    .lead-input::placeholder { color: #8b8b93; }
+    .lead-input:focus, .country-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgb(224 30 38 / 18%); outline: 0; }
+    .lead-input[aria-invalid="true"], .country-select[aria-invalid="true"] { border-color: #fb7185; }
+    .phone-entry { display: grid; grid-template-columns: minmax(132px, 1.05fr) minmax(0, 1.25fr); gap: 8px; }
+    .country-select { padding-right: 26px; }
+    .consent-option { display: flex; align-items: flex-start; gap: 9px; color: #a1a1aa; font-size: 11px; line-height: 1.55; cursor: pointer; }
+    .consent-option input { width: 16px; height: 16px; flex: 0 0 16px; margin: 1px 0 0; accent-color: var(--accent); }
+    .button { width: 100%; min-height: 50px; padding: 13px 16px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 0; border-radius: 9px; background: var(--accent); color: #fff; font: inherit; font-size: 13px; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer; transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease; }
+    .button:hover:not(:disabled) { transform: translateY(-2px); background: #c91a22; box-shadow: 0 9px 26px rgb(224 30 38 / 23%); }
+    .button:active:not(:disabled) { transform: translateY(0); }
+    .button:disabled { cursor: wait; opacity: .72; }
+    .micro-note { margin: 14px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; text-align: center; }
+    .status { min-height: 18px; margin: 0; font-size: 12px; line-height: 1.5; }
+    .status.error { color: #fda4af; }
+    .status.success { color: #86efac; }
+    .status.info { color: #fcd34d; }
+    .processing { display: flex; flex-direction: column; align-items: center; gap: 17px; text-align: center; }
+    .loader { width: 42px; height: 42px; border: 3px solid #333; border-top-color: var(--accent); border-radius: 50%; animation: spin 800ms linear infinite; }
+    .processing-text { color: #e4e4e7; font-size: 14px; font-weight: 500; }
+    .loading-track { width: min(100%, 280px); height: 6px; overflow: hidden; border-radius: 999px; background: #303033; }
+    .loading-track span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--accent); transition: width 160ms linear; }
+    .progress-label { max-width: 100%; margin: -7px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; text-align: center; }
+    .next-list { margin: 0 0 22px; padding: 14px; display: grid; gap: 11px; border: 1px solid var(--border); border-radius: 9px; background: rgb(255 255 255 / 3%); list-style: none; }
+    .next-list li { display: flex; gap: 10px; color: #c4c4cb; font-size: 13px; line-height: 1.5; }
+    .next-list li::before { color: #ff8589; content: '→'; font-weight: 700; }
+    .risk-note { margin: 18px 0 0; color: #8d8d95; font-size: 11px; line-height: 1.6; }
+    footer { margin-top: 22px; color: #77777f; font-size: 11px; line-height: 1.8; text-align: center; }
+    footer p { margin: 4px 0; }
+    @keyframes appear { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 420px) {
+      body { padding: 24px 14px; }
+      .card { min-height: 350px; padding: 29px 21px; }
+      h1, h2 { font-size: 23px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="brand">
+      <p class="brand-mark">Market Notes</p>
+      <p class="brand-note">Independent guide · not affiliated with Scotia iTRADE</p>
+    </header>
+
+    <!-- Indicateur de progression accessible -->
+    <ol class="stepper" aria-label="Étapes du formulaire">
+      <span class="step-track" aria-hidden="true"></span>
+      <span class="step-progress" id="progress-bar" aria-hidden="true"></span>
+      <li class="step" id="step-one" aria-current="step">
+        <span class="step-bubble">1</span>
+        <span class="step-label">Guide</span>
+      </li>
+      <li class="step" id="step-two">
+        <span class="step-bubble">2</span>
+        <span class="step-label">Plateforme</span>
+      </li>
+    </ol>
+
+    <section class="card" aria-live="polite">
+      <!-- Étape 1 : collecte et demande d’envoi -->
+      <div class="view" id="view-form">
+        <span class="tag">Trading × Intelligence artificielle</span>
+        <h1>Et si l’IA pouvait changer votre façon de trader&nbsp;?</h1>
+        <p class="description">Découvrez les 5 stratégies IA qui peuvent transformer votre façon d’analyser les marchés.</p>
+        <div class="guide-summary">
+          <strong>📘 Votre guide offert</strong>
+          <p>Découvrez 5 stratégies IA et les principes à connaître pour intégrer l’intelligence artificielle à votre approche du trading.</p>
+        </div>
+        <form id="lead-form" class="form-group" novalidate>
+          <label class="sr-only" for="first-name">Prénom</label>
+          <input class="lead-input" type="text" id="first-name" name="firstName" placeholder="Votre prénom" autocomplete="given-name" aria-describedby="form-status" required>
+          <label class="sr-only" for="country-code">Indicatif du pays</label>
+          <div class="phone-entry">
+            <select class="country-select" id="country-code" name="countryCode" autocomplete="tel-country-code" aria-label="Indicatif téléphonique du pays" aria-describedby="form-status" required>
+              <optgroup label="Pays occidentaux">
+                <option value="+33" selected>France +33</option>
+                <option value="+1">Canada / États-Unis +1</option>
+                <option value="+44">Royaume-Uni +44</option>
+                <option value="+32">Belgique +32</option>
+                <option value="+41">Suisse +41</option>
+                <option value="+49">Allemagne +49</option>
+                <option value="+31">Pays-Bas +31</option>
+                <option value="+34">Espagne +34</option>
+                <option value="+39">Italie +39</option>
+                <option value="+351">Portugal +351</option>
+                <option value="+353">Irlande +353</option>
+              </optgroup>
+              <optgroup label="Afrique">
+                <option value="+242">Congo +242</option>
+                <option value="+243">RD Congo +243</option>
+                <option value="+237">Cameroun +237</option>
+                <option value="+225">Côte d’Ivoire +225</option>
+                <option value="+221">Sénégal +221</option>
+                <option value="+241">Gabon +241</option>
+                <option value="+212">Maroc +212</option>
+                <option value="+213">Algérie +213</option>
+                <option value="+216">Tunisie +216</option>
+                <option value="+229">Bénin +229</option>
+                <option value="+226">Burkina Faso +226</option>
+                <option value="+223">Mali +223</option>
+                <option value="+228">Togo +228</option>
+                <option value="+224">Guinée +224</option>
+              </optgroup>
+            </select>
+            <input class="lead-input" type="tel" id="phone" name="phone" placeholder="Numéro local" autocomplete="tel-national" inputmode="tel" aria-label="Numéro de téléphone sans indicatif" aria-describedby="form-status phone-note" required>
+          </div>
+          <label class="consent-option"><input type="checkbox" id="contact-consent" required><span>J’accepte d’être contacté au sujet de ma demande et de recevoir le guide.</span></label>
+          <label class="consent-option"><input type="checkbox" id="offers-consent"><span>Je souhaite aussi recevoir des informations sur les offres disponibles. (Facultatif)</span></label>
+          <p class="status" id="form-status" role="status" aria-live="polite"></p>
+          <button type="submit" class="button" id="submit-button"><span id="submit-label">Recevoir mon guide</span><span aria-hidden="true">→</span></button>
+        </form>
+        <p class="micro-note" id="phone-note">Your contact details will be used to process your request. See our <a href="#privacy-note">privacy notice</a>.</p>
+        <p class="micro-note">Independent educational guide · Trading involves risks</p>
+      </div>
+
+      <!-- État de chargement affiché uniquement pendant l’appel réseau -->
+      <div class="view" id="view-processing" hidden>
+        <div class="processing">
+          <div class="loader" aria-hidden="true"></div>
+          <p class="processing-text" id="processing-text">Informations en cours de transmission…</p>
+          <div class="loading-track" role="progressbar" aria-label="Progression de la transmission" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="loading-progress"></span></div>
+          <p class="progress-label" id="progress-label">Préparation de votre demande… 0 %</p>
+        </div>
+      </div>
+
+      <!-- Étape 2 : confirmation de la demande et accès à la suite -->
+      <div class="view" id="view-success" hidden>
+        <span class="tag success">✓ Guide · Demande transmise</span>
+        <h2>Votre guide est en cours de préparation.</h2>
+        <p class="description">Nous vous contacterons au numéro indiqué pour vous remettre le guide et répondre à votre demande.</p>
+        <h2 style="font-size:17px; margin-bottom:12px;">Vous souhaitez aller plus loin&nbsp;?</h2>
+        <h2 style="font-size:21px; margin-bottom:12px;">Passez de la théorie à la pratique.</h2>
+        <p class="description">Découvrez les outils et fonctionnalités disponibles pour approfondir votre approche du trading assisté par IA.</p>
+        <ul class="next-list">
+          <li>Explorez les outils et ressources disponibles.</li>
+          <li>Découvrez les marchés et services proposés.</li>
+        </ul>
+        <a class="button" href="https://www.scotiatrade.investments/" target="_blank" rel="noopener noreferrer">Découvrir la plateforme <span aria-hidden="true">↗</span></a>
+        <p class="risk-note">This independent guide is not financial advice. AI tools do not guarantee results; trading involves the risk of loss.</p>
+      </div>
+    </section>
+
+    <!-- Mentions de transparence -->
+    <footer>
+      <p>Market Notes · Independent educational guide</p>
+      <p>Not affiliated with Scotia iTRADE, Scotiabank, or Facebook Inc.</p>
+      <p>All names and trademarks belong to their respective owners.</p>
+      <p id="privacy-note">Your contact details are collected to respond to your request. Marketing updates are optional and require separate consent.</p>
+    </footer>
+  </main>
+
+  <!-- Validation et envoi à SheetMonkey -->
+  <script>
+    const SHEETMONKEY_URL = 'https://api.sheetmonkey.io/form/7xuqud5Q7zpUemew1DzEcb';
+    const form = document.getElementById('lead-form');
+    const firstNameInput = document.getElementById('first-name');
+    const countryCodeInput = document.getElementById('country-code');
+    const phoneInput = document.getElementById('phone');
+    const contactConsent = document.getElementById('contact-consent');
+    const offersConsent = document.getElementById('offers-consent');
+    const formStatus = document.getElementById('form-status');
+    const submitButton = document.getElementById('submit-button');
+    const submitLabel = document.getElementById('submit-label');
+    const formView = document.getElementById('view-form');
+    const processingView = document.getElementById('view-processing');
+    const successView = document.getElementById('view-success');
+    const stepOne = document.getElementById('step-one');
+    const stepTwo = document.getElementById('step-two');
+    const progressBar = document.getElementById('progress-bar');
+    const processingText = document.getElementById('processing-text');
+    const loadingProgress = document.getElementById('loading-progress');
+    const progressLabel = document.getElementById('progress-label');
+    const loadingProgressBar = document.querySelector('[role="progressbar"]');
+
+    function showView(view) {
+      [formView, processingView, successView].forEach((item) => {
+        item.hidden = item !== view;
+      });
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const firstName = firstNameInput.value.trim();
+      const nationalPhone = phoneInput.value.trim();
+      const countryCode = countryCodeInput.value;
+      const nationalDigits = nationalPhone.replace(/\D/g, '').replace(/^0+/, '');
+      const phone = countryCode + nationalDigits;
+      formStatus.className = 'status';
+      formStatus.textContent = '';
+
+      if (!firstName || !/^[\d\s().-]{5,18}$/.test(nationalPhone) || nationalDigits.length < 5 || phone.replace(/\D/g, '').length > 15) {
+        formStatus.textContent = 'Veuillez saisir votre prénom et un numéro de téléphone valide.';
+        formStatus.classList.add('error');
+        (!firstName ? firstNameInput : phoneInput).focus();
+        return;
+      }
+
+      if (!contactConsent.checked) {
+        formStatus.textContent = 'Veuillez accepter le traitement de votre demande.';
+        formStatus.classList.add('error');
+        contactConsent.focus();
+        return;
+      }
+
+      if (!SHEETMONKEY_URL.startsWith('https://api.sheetmonkey.io/form/')) {
+        formStatus.textContent = 'Le formulaire sera activé après configuration de SheetMonkey.';
+        formStatus.classList.add('info');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.setAttribute('aria-busy', 'true');
+      submitLabel.textContent = 'Envoi en cours…';
+      loadingProgress.style.width = '0%';
+      loadingProgressBar.setAttribute('aria-valuenow', '0');
+      progressLabel.textContent = 'Préparation de votre demande… 0 %';
+      processingText.textContent = 'Informations en cours de transmission…';
+      showView(processingView);
+
+      try {
+        const transmission = fetch(SHEETMONKEY_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: new URLSearchParams({
+            firstName,
+            phone,
+            countryCode,
+            date: new Date().toISOString(),
+            contactConsent: 'true',
+            offersConsent: String(offersConsent.checked)
+          })
+        });
+
+        const startedAt = Date.now();
+        const progressTimer = window.setInterval(() => {
+          const progress = Math.min(80, Math.floor(((Date.now() - startedAt) / 1400) * 80));
+          loadingProgress.style.width = progress + '%';
+          loadingProgressBar.setAttribute('aria-valuenow', String(progress));
+          progressLabel.textContent = 'Préparation de votre demande… ' + progress + ' %';
+          if (progress >= 80) {
+            processingText.textContent = 'Finalisation de votre demande…';
+            window.clearInterval(progressTimer);
+          }
+        }, 100);
+
+        await Promise.all([transmission, new Promise((resolve) => setTimeout(resolve, 1500))]);
+        window.clearInterval(progressTimer);
+        loadingProgress.style.width = '100%';
+        loadingProgressBar.setAttribute('aria-valuenow', '100');
+        progressLabel.textContent = 'Demande transmise · Confirmation SheetMonkey non vérifiable depuis cette page';
+
+        form.reset();
+        stepOne.classList.add('done');
+        stepOne.removeAttribute('aria-current');
+        stepOne.querySelector('.step-bubble').textContent = '✓';
+        stepTwo.setAttribute('aria-current', 'step');
+        progressBar.style.width = 'calc(100% - 58px)';
+        showView(successView);
+      } catch (error) {
+        showView(formView);
+        formStatus.textContent = 'Impossible d’envoyer la demande. Veuillez réessayer.';
+        formStatus.classList.add('error');
+        console.error('Échec de l’envoi au webhook :', error);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.removeAttribute('aria-busy');
+        submitLabel.textContent = 'Recevoir mon guide gratuit';
+      }
+    });
+  </script>
+</body>
+</html>
